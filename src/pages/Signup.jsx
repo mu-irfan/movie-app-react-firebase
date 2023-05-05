@@ -5,7 +5,7 @@ import React from "react";
 import SignupForm from "../components/Signup/SignupForm";
 import { NavLink } from "react-router-dom";
 
-const Signup = () => {
+const Signup = ({setIsLoggedIn}) => {
   //   const navigate = useNavigate()
 
   //   const googleLoginHandler = async () => {
@@ -53,7 +53,7 @@ const Signup = () => {
             Or
           </p>
         </div>
-        <SignupForm />
+        <SignupForm setIsLoggedIn={setIsLoggedIn} />
         <div className="mt-4 font-semibold text-sm text-slate-500 text-center md:text-left">
           Already have an account?
           <NavLink

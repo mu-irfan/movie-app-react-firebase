@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router'
 import { NavLink } from "react-router-dom";
 
 
-const Login = () => {
+const Login = ({setIsLoggedIn}) => {
 
   const navigate = useNavigate()
 
@@ -15,6 +15,8 @@ const Login = () => {
     try {
       await signInWithPopup(auth, googleProvider);
       navigate('/movies')
+      localStorage.setItem("isLoggedIn", true);
+      setIsLoggedIn(true)
     } catch (error) {
       console.error(error);
     }
@@ -70,7 +72,7 @@ const Login = () => {
             Or
           </p>
         </div>
-        <LoginForm />
+        <LoginForm setIsLoggedIn={setIsLoggedIn} />
         <div className="mt-4 font-semibold text-sm text-slate-500 text-center md:text-left">
           Don't have an account?{" "}
           <NavLink

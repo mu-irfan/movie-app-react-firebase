@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-// import { createUserWithEmailAndPassword } from "firebase/auth";
-// import { auth } from "../../config/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../config/firebase";
 import { useNavigate } from "react-router";
 
-const SignupForm = () => {
+const SignupForm = ({setIsLoggedIn}) => {
   //
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -12,14 +12,14 @@ const SignupForm = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(username,email, password);
-    navigate("/");
-    // try {
-    //   await createUserWithEmailAndPassword(auth, email, password);
-    //   navigate('/movies')
-    // } catch (error) {
-    //   console.error(error);
-    // }
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      navigate('/movies')
+      localStorage.setItem("isLoggedIn", true);
+      setIsLoggedIn(true);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

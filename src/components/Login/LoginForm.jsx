@@ -1,28 +1,33 @@
 import React, { useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../config/firebase";
 import { useNavigate } from 'react-router'
 
 
-const LoginForm = () => {
+const LoginForm = ({setIsLoggedIn}) => {
   //
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate()
 
 
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, email, password);
       navigate('/movies')
+      localStorage.setItem("isLoggedIn", true);
+      setIsLoggedIn(true)
     } catch (error) {
+      setError("Invalid email or password");
       console.error(error);
     }
   };
 
   return (
     <form onSubmit={submitHandler}>
+      <p className="text-red-400 py-3">{error}</p>
       <input
         onChange={(e) => setEmail(e.target.value)}
         className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded"
