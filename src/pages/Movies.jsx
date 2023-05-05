@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { auth, db } from "../config/firebase";
-import { signOut } from "@firebase/auth";
+import React, { useState, useEffect, useCallback } from "react";
+import { db } from "../config/firebase";
 import { useNavigate } from "react-router";
 import { getDocs, collection } from "@firebase/firestore";
 import MovieCard from "../components/MoviesCards/MovieCard";
@@ -12,7 +11,9 @@ const Movies = ({ isLoggedIn }) => {
   const navigate = useNavigate();
   const moviesCollection = collection(db, "movies");
 
-  const fetchMovies = async () => {
+
+
+  const fetchMovies = useCallback(async () => {
     try {
       const getMoviesList = await getDocs(moviesCollection);
       const filteredData = getMoviesList.docs.map((doc) => ({
@@ -23,21 +24,13 @@ const Movies = ({ isLoggedIn }) => {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [moviesCollection]);
 
   useEffect(() => {
     fetchMovies();
-  }, []);
+  }, [fetchMovies, moviesCollection]);
 
-  const logoutHandler = async () => {
-    try {
-      await signOut(auth);
-      navigate("/");
-      localStorage.clear();
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  
 
   return (
     <div>
@@ -48,27 +41,27 @@ const Movies = ({ isLoggedIn }) => {
             {isLoggedIn ? (
               <>
                 <button
-                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 mr-4"
+                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 mr-2"
                   onClick={() => setShowMovieForm(true)}
                 >
                   Add Movie
                 </button>
+               
                 <button
-                  className="bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-700"
-                  onClick={logoutHandler}
+                  className="bg-orange-500 text-white font-bold py-2 px-4 rounded hover:bg-orange-700"
+                  onClick={() => navigate("/profile")}
                 >
-                  Logout
+                  Your Profile
                 </button>
               </>
             ) : (
               <button
-                onClick={() => navigate("/")} 
+                onClick={() => navigate("/")}
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               >
                 Login
               </button>
             )}
-           
           </div>
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">

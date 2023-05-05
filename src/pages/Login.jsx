@@ -3,7 +3,7 @@ import LoginForm from "../components/Login/LoginForm";
 import { auth, googleProvider, facebookProvider } from "../config/firebase";
 import { signInWithPopup } from "firebase/auth";
 import { useNavigate } from "react-router";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Login = ({ setIsLoggedIn }) => {
   const navigate = useNavigate();
@@ -39,6 +39,14 @@ const Login = ({ setIsLoggedIn }) => {
       </div>
       <div className="md:w-1/3 max-w-sm">
         <div className="text-center md:text-left">
+          <Link to="/movies" className="mr-1 underline text-green-500">Watch Movies</Link>
+          <br />
+          <br />
+          <div className="flex mb-3 items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300">
+            <p className="mx-4 mb-0 text-center font-semibold text-slate-500">
+              Or Login to Modify Movies 
+            </p>
+          </div>
           <label className="mr-1">Sign in with</label>
           <button
             onClick={googleLoginHandler}
@@ -67,13 +75,13 @@ const Login = ({ setIsLoggedIn }) => {
             class="inline-block mx-1 h-9 w-9 rounded-full bg-blue-600 hover:bg-blue-700 uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca]"
           >
             <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="mx-auto h-4 w-4"
-                fill="currentColor"
-                viewBox="0 0 24 24">
-                <path
-                  d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
-              </svg>
+              xmlns="http://www.w3.org/2000/svg"
+              className="mx-auto h-4 w-4"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
+            </svg>
           </button>
         </div>
         <div className="my-5 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300">
